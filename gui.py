@@ -1,65 +1,46 @@
-# # Importing tkinter module
-# import tkinter as tk
-# import datetime
-# now=datetime.datetime.now()
-# now.isoformat()
-# # current date and time
-
-
-# # creating Tk window
-# root = tk.Tk()
-# root.geometry("500x500")
-# root.title("My First GUI")
-
-# root.configure(bg='blue')
-# label = tk.Button(root, text=now)
-# label.pack()
-
-# root.mainloop() 
 
 import tkinter as tk
-import datetime
-import math
+import time
+
+class DigitalClock(tk.Label):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+
+        # Configure the label
+        self.configure(font=('Courier', 40), background='black', foreground='green')
+
+        # Update the time
+        self.update_time()
+
+    def update_time(self):
+        # Get the current time
+        current_time = time.strftime('%H:%M:%S')
+
+        # Update the label text
+        self.configure(text=current_time)
+
+        # Schedule the next update in 1000 milliseconds (1 second)
+        self.after(1000, self.update_time)
 
 # Create the main window
 root = tk.Tk()
-root.title("Clock")
 
-# Create the canvas to draw the clock on
-canvas = tk.Canvas(root, width=400, height=400)
-canvas.pack()
+# Create the digital clock label
+digital_clock = DigitalClock(root)
 
-# Draw the clock face
-canvas.create_oval(50, 50, 350, 350, width=4)
+# Add the digital clock label to the window
+digital_clock.pack()
 
-# Draw the numbers on the clock face
-for i in range(1, 13):
-    angle = i * 30 * 3.14159 / 180
-    x = 200 + 140 * math.sin(angle)
-    y = 200 - 140 * math.cos(angle)
-    canvas.create_text(x, y, text=str(i), font=("Helvetica", 20))
-
-# Draw the clock hands
-hour_hand = canvas.create_line(200, 200, 200, 100, width=8, fill="red")
-minute_hand = canvas.create_line(200, 200, 200, 50, width=4)
-second_hand = canvas.create_line(200, 200, 200, 50, width=2, fill="red")
-
-# Define the function to update the clock
-def update_clock():
-    now = datetime.datetime.now()
-    hour = now.hour % 12
-    minute = now.minute
-    second = now.second
-    hour_angle = (hour + minute / 60) * 30 * 3.14159 / 180
-    minute_angle = minute * 6 * 3.14159 / 180
-    second_angle = second * 6 * 3.14159 / 180
-    canvas.coords(hour_hand, 200, 200, 200 + 80 * math.sin(hour_angle), 200 - 80 * math.cos(hour_angle))
-    canvas.coords(minute_hand, 200, 200, 200 + 120 * math.sin(minute_angle), 200 - 120 * math.cos(minute_angle))
-    canvas.coords(second_hand, 200, 200, 200 + 120 * math.sin(second_angle), 200 - 120 * math.cos(second_angle))
-    root.after(1000, update_clock)
-
-# Start the clock
-update_clock()
-
-# Run the main loop
+# Start the main event loop
 root.mainloop()
+
+In this example, we create a DigitalClock class that inherits from the Label class. The DigitalClock class is responsible for updating the text of the label with the current time.
+
+We set the font of the label to 'Courier' with a size of 40, and set the background to black and foreground (text) to green.
+
+The update_time method gets the current time using time.strftime with the format '%H:%M:%S' (hours, minutes, seconds). It then updates the label text with the current time and schedules the next update in 1000 milliseconds (1 second) using the .after() method.
+
+We then create an instance of the DigitalClock class called digital_clock, add it to the window using .pack(), and start the main event loop.
+
+When you run this code, you should see a digital clock display with the current time in hours, minutes, and seconds. The display will update every second to show the current time.
+

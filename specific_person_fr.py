@@ -49,7 +49,8 @@ with picamera.PiCamera() as camera:
                     if fr.compare_faces([known_face_encoding], current_face_encoding[0])[0]:
                         # WE FOUND SRIKAR !!!
                         print("Hey Sexy")
-                        break       
+                        break    
+                    print("Not detected")
 
         # Clear the output array for the next frame
         output.truncate(0)

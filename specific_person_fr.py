@@ -3,6 +3,7 @@ import picamera
 import picamera.array
 import numpy as np
 import cv2
+import time
 
 NUM_FACES = 5
 
@@ -12,6 +13,7 @@ known_face_encodings = []
 face_image = fr.load_image_file("face1.jpg")
 face_encoding = fr.face_encodings(face_image)[0]
 known_face_encodings.append(face_encoding)
+print("Face encoding done!!!")
 
 # Start capturing video from the PiCamera
 with picamera.PiCamera() as camera:

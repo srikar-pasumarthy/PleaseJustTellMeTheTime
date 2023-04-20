@@ -6,7 +6,7 @@ NUM_FACES = 5
 # Load the known face images and their encodings
 known_face_encodings = []
 
-face_image = fr.load_image_file("srikar_pics\face0.jpg")
+face_image = fr.load_image_file("face1.jpg")
 face_encoding = fr.face_encodings(face_image)[0]
 known_face_encodings.append(face_encoding)
 print("hallo")

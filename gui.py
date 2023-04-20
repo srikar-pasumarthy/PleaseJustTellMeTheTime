@@ -6,10 +6,10 @@ class DigitalClock(tk.Label):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
         # Configure the label
-        self.configure(font=('Courier', 150), background='black', foreground='green')
-     
+        self.configure(font=('Courier', 125), background='black', foreground='green')
         # Update the time
         self.update_time()
+
 
     def update_time(self):
         # Get the current time
@@ -24,6 +24,7 @@ class DigitalClock(tk.Label):
 # Create the main window
 root = tk.Tk()
 root.geometry("800x480")
+root.configure(bg='black')
 # Create the digital clock label
 digital_clock = DigitalClock(root)
 

@@ -6,20 +6,27 @@ NUM_FACES = 5
 # Load the known face images and their encodings
 known_face_encodings = []
 
-for i in range(NUM_FACES):
-    face_image = fr.load_image_file(f"srikar_pics\\face{i+1}.jpg")
-    face_encoding = fr.face_encodings(face_image)[0]
-    known_face_encodings.append(face_encoding)
+face_image = fr.load_image_file("srikar_pics\face0.jpg")
+face_encoding = fr.face_encodings(face_image)[0]
+known_face_encodings.append(face_encoding)
+print("hallo")
+
+# for i in range(NUM_FACES):
+#     face_image = fr.load_image_file(f"srikar_pics\\face{i+1}.jpg")
+#     face_encoding = fr.face_encodings(face_image)[0]
+#     known_face_encodings.append(face_encoding)
 
 # Initialize the face detection classifier
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 # Start capturing video from the default camera
 cap = cv2.VideoCapture(0)
+print("Capturing video from opencv???")
 
 while True:
     # Read a frame from the video feed
     ret, frame = cap.read()
+    print("WOOOOOOOOOOOOOOOOOO")
 
     # Convert the frame to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)

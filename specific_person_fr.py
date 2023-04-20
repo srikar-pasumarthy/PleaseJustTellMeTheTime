@@ -10,10 +10,12 @@ NUM_FACES = 5
 # Load the known face images and their encodings
 known_face_encodings = []
 
-face_image = fr.load_image_file("face1.jpg")
-face_encoding = fr.face_encodings(face_image)[0]
-known_face_encodings.append(face_encoding)
-print("Face encoding done!!!")
+for i in range(1, 6):
+    print(f"face encoding start for {i}")
+    face_image = fr.load_image_file(f"face{i}.jpg")
+    face_encoding = fr.face_encodings(face_image)[0]
+    known_face_encodings.append(face_encoding)
+    print(f"Face encoding done for {i}")
 
 # Start capturing video from the PiCamera
 with picamera.PiCamera() as camera:

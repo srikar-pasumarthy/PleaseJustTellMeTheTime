@@ -25,21 +25,24 @@ with picamera.PiCamera() as camera:
     camera.rotation = 180
 
     # Initialize the output array and the face detection classifier
+    print("1")
     output = picamera.array.PiRGBArray(camera, size=camera.resolution)
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-
+    print("2")
     # Allow the camera to warm up
     time.sleep(2)
-
+    print("3")
     for frame in camera.capture_continuous(output, format="rgb", use_video_port=True):
+        print("4")
         # Convert the frame to grayscale
         gray = cv2.cvtColor(frame.array, cv2.COLOR_RGB2GRAY)
-
+        print("5")
         # Detect faces in the frame
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=3, minSize=(30, 30))
 
         # Process each detected face
         for (x, y, w, h) in faces:
+            print("Checking a face")
             # Extract the face encoding from the current face
             current_face_image = cv2.rectangle(frame.array, (x,y), (x+w, y+h), (0, 255, 0), 2)
 
@@ -47,6 +50,7 @@ with picamera.PiCamera() as camera:
             current_face_encoding = fr.face_encodings(current_face_image)
 
             # Compare the current face encoding with the known face encodings
+            print("Comparing")
             if len(current_face_encoding) > 0:
                 for known_face_encoding in known_face_encodings:
                     if fr.compare_faces([known_face_encoding], current_face_encoding[0])[0]:

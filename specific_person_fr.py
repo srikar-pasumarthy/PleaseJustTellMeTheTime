@@ -43,19 +43,23 @@ with picamera.PiCamera() as camera:
             print("Found a face")
             # Extract the face encoding from the current face
             current_face_image = cv2.rectangle(frame.array, (x,y), (x+w, y+h), (0, 255, 0), 2)
-
             # current_face_image = frame.array[y:y+h, x:x+w]
             current_face_encoding = fr.face_encodings(current_face_image)
 
             # Compare the current face encoding with the known face encodings
             print("Checking...")
+            print(len(current_face_encoding))
             if len(current_face_encoding) > 0:
+                print("In the if statement")
                 for known_face_encoding in known_face_encodings:
+                    print("For loop...")
                     if fr.compare_faces([known_face_encoding], current_face_encoding[0])[0]:
+                        print("In the second if...")
                         # WE FOUND SRIKAR !!!
                         print("Hey Sexy")
                         break    
                     print("Not detected")
+            print("Done checking")
 
         # Clear the output array for the next frame
         output.truncate(0)

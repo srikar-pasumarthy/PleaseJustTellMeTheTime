@@ -34,7 +34,7 @@ with picamera.PiCamera() as camera:
     # Allow the camera to warm up
     time.sleep(2)
     print("3")
-    for frame in camera.capture_continuous(output, format="rgb", use_video_port=True):
+    for frame in camera.capture_continuous(output, format="bgr", use_video_port=True):
         # Convert the frame to grayscale
         gray = cv2.cvtColor(frame.array, cv2.COLOR_RGB2GRAY)
         # Detect faces in the frame

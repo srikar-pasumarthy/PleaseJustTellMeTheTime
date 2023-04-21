@@ -1,6 +1,7 @@
 import time
 import picamera
 import numpy as np
+import picamera.array
 import cv2
 
 # Initialize the camera

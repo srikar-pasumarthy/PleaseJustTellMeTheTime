@@ -9,6 +9,7 @@ NUM_FACES = 5
 
 # Load the known face images and their encodings
 known_face_encodings = []
+known_face_names = ["Srikar", "Javier", "Johnny", "Srikar", "srikar"]
 
 for i in range(1, 6):
     print(f"face encoding start for {i}")
@@ -39,43 +40,28 @@ for frame in camera.capture_continuous(raw_capture, format='bgr', use_video_port
     # Convert the raw capture to a NumPy array
     image = frame.array
 
-    # Display the image
-    cv2.imshow('Video', image)
-
     # Wait for a key press to exit
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-    gray = cv2.cvtColor(frame.array, cv2.COLOR_RGB2GRAY)
-        # Detect faces in the frame
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=3, minSize=(30, 30))
+    # TODO: Use Face Recognition to detect faces and draw a green rectangle if the right person is found!
+    face_locations = fr.face_locations(image)
+    face_encodings = fr.face_encodings(image, face_locations)
 
-    # Process each detected face
-    for (x, y, w, h) in faces:
-        print("Found a face")
-        # Draw a rectangle around the face
-        cv2.rectangle(frame.array, (x,y), (x+w, y+h), (0, 255, 0), 2)
+    for face_encoding, face_location in zip(face_encodings, face_locations):
+        matches = fr.compare_faces(known_face_encodings, face_encoding)
+        name = "Unknown"
 
-        # Extract the face encoding from the current face
-        current_face_image = frame.array[y:y+h, x:x+w]
-        current_face_encoding = fr.face_encodings(current_face_image)
+        if True in matches:
+            first_match_index = matches.index(True)
+            name = known_face_names[first_match_index]
 
-        # Compare the current face encoding with the known face encodings
-        print("Checking...")
-        print(len(current_face_encoding))
-        if len(current_face_encoding) > 0:
-            print("In the if statement")
-            for known_face_encoding in known_face_encodings:
-                print("For loop...")
-                if fr.compare_faces([known_face_encoding], current_face_encoding[0])[0]:
-                    print("In the second if...")
-                    # WE FOUND SRIKAR !!!
-                    print("Hey Sexy")
-                    break    
-                print("Not detected")
-        print("Done checking")
+        top, right, bottom, left = face_location
+        cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(image, name, (left + 6, bottom - 6), font, 0.5, (255, 255, 255), 1)
 
-# Show the frame
+    # Show the frame
     cv2.imshow("Frame", frame.array)
 
     # Exit the loop if the user presses the 'q' key

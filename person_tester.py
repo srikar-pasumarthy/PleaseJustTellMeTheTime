@@ -27,7 +27,7 @@ with picamera.PiCamera() as camera:
     # Initialize the output array and the face detection classifier
     print("1")
     #output = picamera.array.PiRGBArray(camera, size=camera.resolution)
-    output = picamera.array.PiRGBArray(camera, size=(camera.resolution[0], camera.resolution[1]))
+    output = picamera.array.PiRGBArray(camera)
 
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     print("2")

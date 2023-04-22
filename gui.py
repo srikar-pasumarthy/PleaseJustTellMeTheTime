@@ -2,6 +2,7 @@
 import tkinter as tk
 import time
 import main
+from opencv_version import *
 
 
 class DigitalClock(tk.Label):
@@ -15,6 +16,7 @@ class DigitalClock(tk.Label):
         self.update_time()
 
     def update_time(self):
+        print(main.detected)
         # Get the current time
         current_time = time.strftime('%H:%M:%S')
 
@@ -56,6 +58,7 @@ class LoadingSpinner(tk.Canvas):
 
 class gui:
     def create(self):
+        
         # Create the main window
         root = tk.Tk()
 

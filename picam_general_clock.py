@@ -31,6 +31,9 @@ camera.framerate = 24
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
+# Create a window to display the video
+cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
+
 def detect_person():
     # Capture a single frame
     # raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)

@@ -17,24 +17,24 @@ for i in range(1, 6):
     known_face_encodings.append(face_encoding)
     print(f"Face encoding done for {i}")
 
+# Initialize the camera
+camera = picamera.PiCamera()
+
+# Set camera resolution
+camera.resolution = (640, 480)
+
+# Set video framerate
+camera.framerate = 24
+
+# Create a window to display the video
+cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
+
+# Create a stream object to hold the video data
+raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
+
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
 def detect_person():
-    # Initialize the camera
-    camera = picamera.PiCamera()
-
-    # Set camera resolution
-    camera.resolution = (640, 480)
-
-    # Set video framerate
-    camera.framerate = 24
-
-    # Create a window to display the video
-    cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
-
-    # Create a stream object to hold the video data
-    raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
-
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-
     # Continuously capture video frames and display them
     for frame in camera.capture_continuous(raw_capture, format='bgr', use_video_port=True):
         # Convert the raw capture to a NumPy array

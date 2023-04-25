@@ -33,13 +33,39 @@ def detect_person():
     raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
     srikar_is_found = False
     camera.capture(raw_capture, format='bgr')
-    image = raw_capture.array
+    frame = raw_capture.array
 
     print("about to check encodings")
     # Perform face recognition on the captured frame
-    face_locations = fr.face_locations(image)
+    #face_locations = fr.face_locations(image)
     #face_encodings = fr.face_encodings(image, face_locations)
-    print(len(face_locations))
+
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # Detect faces in the frame
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=3, minSize=(30, 30))
+    # faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+    is_srikar_present = False
+
+    if len(faces) == 0:
+        return is_srikar_present
+
+    # Process each detected face
+    for (x, y, w, h) in faces:
+        # Extract the face encoding from the current face
+        current_face_image = cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2)
+
+        # current_face_image = frame.array[y:y+h, x:x+w]
+        current_face_encoding = fr.face_encodings(current_face_image)
+
+        # Compare the current face encoding with the known face encodings
+        if len(current_face_encoding) > 0:
+            for known_face_encoding in known_face_encodings:
+                if fr.compare_faces([known_face_encoding], current_face_encoding[0])[0]:
+                    is_srikar_present = True
+                    break    
+
+    return is_srikar_present
 
     # if len(face_locations) > 0:
     #     srikar_is_found = True
@@ -57,9 +83,9 @@ def detect_person():
     #         print("No match found!")
 
     # Show the frame
-    cv2.imshow("Frame", image)
+    #cv2.imshow("Frame", image)
     
-    return srikar_is_found
+    #return srikar_is_found
 
 # create a tkinter window
 window = tk.Tk()

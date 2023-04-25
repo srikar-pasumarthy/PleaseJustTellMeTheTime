@@ -28,6 +28,7 @@ camera.framerate = 24
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
+#Begin detecting faces
 def detect_person():
     # Capture a single frame
     raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)

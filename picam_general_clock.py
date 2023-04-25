@@ -34,10 +34,13 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_fronta
 def detect_person():
     # Capture a single frame
     # raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
+    # Create a stream object to hold the video data
+    raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
     srikar_is_found = False
     camera.capture(raw_capture, format='bgr')
     image = raw_capture.array
 
+    print("about to check encodings")
     # Perform face recognition on the captured frame
     face_locations = fr.face_locations(image)
     face_encodings = fr.face_encodings(image, face_locations)

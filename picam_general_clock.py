@@ -68,33 +68,35 @@ window = tk.Tk()
 window.geometry("300x200")
 
 # create a label to display the time
-def update_time():
+def update_time(time_since_srikar_detected):
     # get the current time
     now = datetime.now()
     # determine if a person is present
     is_srikar_present = detect_person()
     # set the time to display based on whether a person is present
     print("here")
-    if not is_srikar_present:
+    if (not is_srikar_present) and time_since_srikar_detected > 5:
         time_to_display = now.strftime("%H:%M")
-        time_since_srikar_detected = 5
-    elif time_since_srikar_detected != 0:
-        # DO something
-        time_since_srikar_detected -= 1
+    elif not is_srikar_present:
+        time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M")
+        time_since_srikar_detected += 1
     else:
         time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M")
+        time_since_srikar_detected = 0
     # update the label text with the current time
     time_label.config(text=time_to_display)
     # schedule the update_time function to run again in 1 second
     window.after(1000, update_time)
+
+    return time_since_srikar_detected
 
 # create a label to display the time
 time_label = tk.Label(window, font=("Arial", 30))
 time_label.pack(pady=50)
 
 # start the update_time loop
-time_since_srikar_detected = 0
-update_time()
+time_since_srikar_detected = 6
+time_since_srikar_detected = update_time(time_since_srikar_detected)
 
 # start the tkinter main loop
 window.mainloop()

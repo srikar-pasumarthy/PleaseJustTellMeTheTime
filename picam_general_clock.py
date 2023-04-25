@@ -76,9 +76,9 @@ def update_time():
     # set the time to display based on whether a person is present
     print("here")
     if not is_srikar_present:
-        time_to_display = now.strftime("%H:%M:%S")
+        time_to_display = now.strftime("%H:%M")
     else:
-        time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M:%S")
+        time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M")
     # update the label text with the current time
     time_label.config(text=time_to_display)
     # schedule the update_time function to run again in 1 second

@@ -17,14 +17,7 @@ for i in range(1, 6):
     known_face_encodings.append(face_encoding)
     print(f"Face encoding done for {i}")
 
-# Initialize the camera
-camera = picamera.PiCamera()
 
-# Set camera resolution
-camera.resolution = (640, 480)
-
-# Set video framerate
-camera.framerate = 24
 
 # Create a stream object to hold the video data
 #raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
@@ -35,6 +28,14 @@ def detect_person():
     # Capture a single frame
     # raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
     # Create a stream object to hold the video data
+    # Initialize the camera
+    camera = picamera.PiCamera()
+
+    # Set camera resolution
+    camera.resolution = (640, 480)
+
+    # Set video framerate
+    camera.framerate = 24
     raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
     srikar_is_found = False
     camera.capture(raw_capture, format='bgr')

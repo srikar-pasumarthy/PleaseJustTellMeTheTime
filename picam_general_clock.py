@@ -88,8 +88,7 @@ time_label = tk.Label(window, font=("Arial", 30))
 time_label.pack(pady=50)
 
 # start the update_time loop
-time_since_srikar_detected = 6
-update_time(time_since_srikar_detected)
+update_time()
 
 # start the tkinter main loop
 window.mainloop()

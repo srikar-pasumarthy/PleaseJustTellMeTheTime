@@ -26,19 +26,10 @@ camera.resolution = (640, 480)
 # Set video framerate
 camera.framerate = 24
 
-# Create a stream object to hold the video data
-#raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
-
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-
-# Create a window to display the video
-cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
 
 def detect_person():
     # Capture a single frame
-    # raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
-    # Create a stream object to hold the video data
-
     raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
     srikar_is_found = False
     camera.capture(raw_capture, format='bgr')
@@ -46,8 +37,9 @@ def detect_person():
 
     print("about to check encodings")
     # Perform face recognition on the captured frame
-    #face_locations = fr.face_locations(image)
+    face_locations = fr.face_locations(image)
     #face_encodings = fr.face_encodings(image, face_locations)
+    print("nfsdoinfiodsnfios")
 
     # if len(face_locations) > 0:
     #     srikar_is_found = True
@@ -66,11 +58,7 @@ def detect_person():
 
     # Show the frame
     cv2.imshow("Frame", image)
-    #cv2.waitKey(0)
-
-    # Clean up
-    #cv2.destroyAllWindows()
-    #camera.close()
+    
     return srikar_is_found
 
 # create a tkinter window

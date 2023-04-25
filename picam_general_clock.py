@@ -23,13 +23,13 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_fronta
 camera = picamera.PiCamera()
 camera.resolution = (640, 480)
 camera.framerate = 24
-camera.rotation = 180
+
 raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
 print("Camera set up")
 
 def detect_person():
     is_srikar_present = False
-    
+
     for frame in camera.capture_continuous(raw_capture, format='bgr', use_video_port=True):
     # Convert the raw capture to a NumPy array
         image = frame.array
@@ -43,6 +43,7 @@ def detect_person():
             if True in matches:
                 is_srikar_present = True
 
+    raw_capture.truncate(0)
     return is_srikar_present
 
 # create a tkinter window

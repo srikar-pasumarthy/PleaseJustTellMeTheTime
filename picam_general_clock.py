@@ -58,8 +58,8 @@ def detect_person():
         #     break
 
 
-        # # Clear the buffer for the next frame
-        # raw_capture.truncate(0)
+        # Clear the buffer for the next frame
+        raw_capture.truncate(0)
 
     # # Clean up
     # cv2.destroyAllWindows()

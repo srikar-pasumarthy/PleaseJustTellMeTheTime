@@ -50,20 +50,20 @@ def detect_person():
             if True in matches:
                 return True
 
-        # Show the frame
-        cv2.imshow("Frame", frame.array)
+        # # Show the frame
+        # cv2.imshow("Frame", frame.array)
 
-        # Exit the loop if the user presses the 'q' key
-        if cv2.waitKey(1) == ord('q'):
-            break
+        # # Exit the loop if the user presses the 'q' key
+        # if cv2.waitKey(1) == ord('q'):
+        #     break
 
 
-        # Clear the buffer for the next frame
-        raw_capture.truncate(0)
+        # # Clear the buffer for the next frame
+        # raw_capture.truncate(0)
 
-    # Clean up
-    cv2.destroyAllWindows()
-    camera.close()
+    # # Clean up
+    # cv2.destroyAllWindows()
+    # camera.close()
 
     return False
 

@@ -62,7 +62,7 @@ def detect_person():
 
     # Show the frame
     cv2.imshow("Frame", image)
-    cv2.waitKey(0)
+    #cv2.waitKey(0)
 
     # Clean up
     cv2.destroyAllWindows()

@@ -69,6 +69,7 @@ window.geometry("300x200")
 
 # create a label to display the time
 def update_time(time_since_srikar_detected):
+    print(f"time since srikar detected is {time_since_srikar_detected}")
     # get the current time
     now = datetime.now()
     # determine if a person is present
@@ -86,7 +87,7 @@ def update_time(time_since_srikar_detected):
     # update the label text with the current time
     time_label.config(text=time_to_display)
     # schedule the update_time function to run again in 1 second
-    window.after(1000, update_time)
+    window.after(1000, update_time(time_since_srikar_detected))
 
     return time_since_srikar_detected
 

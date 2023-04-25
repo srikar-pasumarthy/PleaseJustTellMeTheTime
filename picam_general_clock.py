@@ -66,7 +66,6 @@ def detect_person():
 # create a tkinter window
 window = tk.Tk()
 window.geometry("300x200")
-time_since_srikar_detected = 0
 
 # create a label to display the time
 def update_time():
@@ -94,6 +93,7 @@ time_label = tk.Label(window, font=("Arial", 30))
 time_label.pack(pady=50)
 
 # start the update_time loop
+time_since_srikar_detected = 0
 update_time()
 
 # start the tkinter main loop

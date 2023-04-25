@@ -26,46 +26,42 @@ camera.resolution = (640, 480)
 # Set video framerate
 camera.framerate = 24
 
-# Create a window to display the video
-cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
-
 # Create a stream object to hold the video data
 raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 def detect_person():
-    # Continuously capture video frames and display them
-    for frame in camera.capture_continuous(raw_capture, format='bgr', use_video_port=True):
-        # Convert the raw capture to a NumPy array
-        image = frame.array
+    # Capture a single frame
+    # raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
+    srikar_is_found = False
+    camera.capture(raw_capture, format='bgr')
+    image = raw_capture.array
 
-        # # TODO: Use Face Recognition to detect faces and draw a green rectangle if the right person is found!
-        # face_locations = fr.face_locations(image)
-        # face_encodings = fr.face_encodings(image, face_locations)
+    # Perform face recognition on the captured frame
+    face_locations = fr.face_locations(image)
+    face_encodings = fr.face_encodings(image, face_locations)
 
-        # for face_encoding, face_location in zip(face_encodings, face_locations):
-        #     matches = fr.compare_faces(known_face_encodings, face_encoding)
+    for face_encoding, face_location in zip(face_encodings, face_locations):
+        matches = fr.compare_faces(known_face_encodings, face_encoding)
 
-        #     if True in matches:
-        #         return True
+        if True in matches:
+            print("Match found!")
+            # Draw a green rectangle around the recognized face
+            top, right, bottom, left = face_location
+            cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
+            srikar_is_found = True
+        else:
+            print("No match found!")
 
-        # Show the frame
-        cv2.imshow("Frame", frame.array)
-
-        # Exit the loop if the user presses the 'q' key
-        if cv2.waitKey(1) == ord('q'):
-            break
-
-
-        # Clear the buffer for the next frame
-        raw_capture.truncate(0)
+    # Show the frame
+    cv2.imshow("Frame", image)
+    cv2.waitKey(0)
 
     # Clean up
     cv2.destroyAllWindows()
     camera.close()
-
-    return False
+    return srikar_is_found
 
 # create a tkinter window
 window = tk.Tk()
@@ -78,6 +74,7 @@ def update_time():
     # determine if a person is present
     is_srikar_present = detect_person()
     # set the time to display based on whether a person is present
+    print("here")
     if is_srikar_present:
         time_to_display = now.strftime("%H:%M:%S")
     else:

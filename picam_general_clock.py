@@ -39,7 +39,7 @@ def detect_person():
     # Perform face recognition on the captured frame
     face_locations = fr.face_locations(image)
     #face_encodings = fr.face_encodings(image, face_locations)
-    print("nfsdoinfiodsnfios")
+    print(len(face_locations))
 
     # if len(face_locations) > 0:
     #     srikar_is_found = True

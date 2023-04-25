@@ -17,21 +17,27 @@ for i in range(1, 6):
     known_face_encodings.append(face_encoding)
     print(f"Face encoding done for {i}")
 
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-
-# Set up the camera
-camera = picamera.PiCamera()
-camera.resolution = (640, 480)
-camera.framerate = 24
-
-raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
-print("Camera set up")
-
 def detect_person():
-    is_srikar_present = False
+    # Initialize the camera
+    camera = picamera.PiCamera()
 
+    # Set camera resolution
+    camera.resolution = (640, 480)
+
+    # Set video framerate
+    camera.framerate = 24
+
+    # Create a window to display the video
+    cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
+
+    # Create a stream object to hold the video data
+    raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
+
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+    # Continuously capture video frames and display them
     for frame in camera.capture_continuous(raw_capture, format='bgr', use_video_port=True):
-    # Convert the raw capture to a NumPy array
+        # Convert the raw capture to a NumPy array
         image = frame.array
 
         # TODO: Use Face Recognition to detect faces and draw a green rectangle if the right person is found!
@@ -40,11 +46,26 @@ def detect_person():
 
         for face_encoding, face_location in zip(face_encodings, face_locations):
             matches = fr.compare_faces(known_face_encodings, face_encoding)
-            if True in matches:
-                is_srikar_present = True
 
-    raw_capture.truncate(0)
-    return is_srikar_present
+            if True in matches:
+                return True
+
+        # Show the frame
+        cv2.imshow("Frame", frame.array)
+
+        # Exit the loop if the user presses the 'q' key
+        if cv2.waitKey(1) == ord('q'):
+            break
+
+
+        # Clear the buffer for the next frame
+        raw_capture.truncate(0)
+
+    # Clean up
+    cv2.destroyAllWindows()
+    camera.close()
+
+    return False
 
 # create a tkinter window
 window = tk.Tk()

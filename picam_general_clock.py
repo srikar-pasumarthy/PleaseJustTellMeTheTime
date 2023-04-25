@@ -64,6 +64,7 @@ def detect_person():
     return is_srikar_present
 
 # create a tkinter window
+print("here")
 window = tk.Tk()
 window.geometry("300x200")
 
@@ -74,6 +75,7 @@ def update_time():
     # determine if a person is present
     is_srikar_present = detect_person()
     # set the time to display based on whether a person is present
+    print("here")
     if not is_srikar_present:
         time_to_display = now.strftime("%H:%M")
     else:
@@ -81,7 +83,7 @@ def update_time():
     # update the label text with the current time
     time_label.config(text=time_to_display)
     # schedule the update_time function to run again in 1 second
-    window.after(1000, update_time())
+    window.after(1000, update_time)
 
 # create a label to display the time
 time_label = tk.Label(window, font=("Arial", 30))

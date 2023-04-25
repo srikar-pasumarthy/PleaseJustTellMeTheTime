@@ -47,6 +47,7 @@ def detect_person():
     # faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
     is_srikar_present = False
 
+    print(f"there are {len(faces)}")
     if len(faces) == 0:
         return is_srikar_present
 

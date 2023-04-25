@@ -40,22 +40,22 @@ def detect_person():
         # Convert the raw capture to a NumPy array
         image = frame.array
 
-        # TODO: Use Face Recognition to detect faces and draw a green rectangle if the right person is found!
-        face_locations = fr.face_locations(image)
-        face_encodings = fr.face_encodings(image, face_locations)
+        # # TODO: Use Face Recognition to detect faces and draw a green rectangle if the right person is found!
+        # face_locations = fr.face_locations(image)
+        # face_encodings = fr.face_encodings(image, face_locations)
 
-        for face_encoding, face_location in zip(face_encodings, face_locations):
-            matches = fr.compare_faces(known_face_encodings, face_encoding)
+        # for face_encoding, face_location in zip(face_encodings, face_locations):
+        #     matches = fr.compare_faces(known_face_encodings, face_encoding)
 
-            if True in matches:
-                return True
+        #     if True in matches:
+        #         return True
 
-        # # Show the frame
-        # cv2.imshow("Frame", frame.array)
+        # Show the frame
+        cv2.imshow("Frame", frame.array)
 
-        # # Exit the loop if the user presses the 'q' key
-        # if cv2.waitKey(1) == ord('q'):
-        #     break
+        # Exit the loop if the user presses the 'q' key
+        if cv2.waitKey(1) == ord('q'):
+            break
 
 
         # Clear the buffer for the next frame

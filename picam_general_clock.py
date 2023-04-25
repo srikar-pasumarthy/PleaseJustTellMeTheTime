@@ -36,15 +36,10 @@ def detect_person():
     frame = raw_capture.array
 
     print("about to check encodings")
-    # Perform face recognition on the captured frame
-    #face_locations = fr.face_locations(image)
-    #face_encodings = fr.face_encodings(image, face_locations)
-
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # Detect faces in the frame
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=3, minSize=(30, 30))
-    # faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
     is_srikar_present = False
 
     print(f"there are {len(faces)}")
@@ -62,31 +57,11 @@ def detect_person():
         # Compare the current face encoding with the known face encodings
         if len(current_face_encoding) > 0:
             for known_face_encoding in known_face_encodings:
-                if fr.compare_faces([known_face_encoding], current_face_encoding[0])[0]:
+                if fr.compare_faces([known_face_encoding], current_face_encoding[0], tolerance=0.8)[0]:
                     is_srikar_present = True
                     break    
 
     return is_srikar_present
-
-    # if len(face_locations) > 0:
-    #     srikar_is_found = True
-
-    # for face_encoding, face_location in zip(face_encodings, face_locations):
-    #     matches = fr.compare_faces(known_face_encodings, face_encoding)
-
-    #     if True in matches:
-    #         print("Match found!")
-    #         # Draw a green rectangle around the recognized face
-    #         top, right, bottom, left = face_location
-    #         cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
-    #         srikar_is_found = True
-    #     else:
-    #         print("No match found!")
-
-    # Show the frame
-    #cv2.imshow("Frame", image)
-    
-    #return srikar_is_found
 
 # create a tkinter window
 window = tk.Tk()
@@ -100,7 +75,7 @@ def update_time():
     is_srikar_present = detect_person()
     # set the time to display based on whether a person is present
     print("here")
-    if is_srikar_present:
+    if not is_srikar_present:
         time_to_display = now.strftime("%H:%M:%S")
     else:
         time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M:%S")

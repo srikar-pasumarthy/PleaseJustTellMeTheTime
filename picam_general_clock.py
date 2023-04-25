@@ -73,7 +73,9 @@ def detect_person():
 # create a tkinter window
 print("here")
 window = tk.Tk()
-window.geometry("300x200")
+window.attributes("-fullscreen", True)
+# window.geometry("300x200")
+window.configure(font=('Courier', 40), background='black', foreground='green')
 
 # create a label to display the time
 def update_time():
@@ -93,11 +95,16 @@ def update_time():
     window.after(1000, update_time)
 
 # create a label to display the time
-time_label = tk.Label(window, font=("DS-Digital", 30))
+time_label = tk.Label(window, font=("DS-Digital", 80))
 time_label.pack(pady=50)
 
 # start the update_time loop
 update_time()
+
+def exit_fullscreen(event):
+    window.attributes("-fullscreen", False)
+
+window.bind("<Escape>", exit_fullscreen)
 
 # start the tkinter main loop
 window.mainloop()

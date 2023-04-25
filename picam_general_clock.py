@@ -19,43 +19,39 @@ for i in range(1, 6):
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
+# Create a window to display the video
+cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
+
 # Set up the camera
 camera = picamera.PiCamera()
 camera.resolution = (640, 480)
 camera.framerate = 24
 camera.rotation = 180
+raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
 print("Camera set up")
 
 def detect_person():
     while True:
         # read a frame from the camera
-        output = picamera.array.PiRGBArray(camera, size=camera.resolution)
+        # Create a stream object to hold the video data
         is_srikar_present = False
 
-        # Capture a single frame
-        camera.capture(output, format='rgb')
+        frame = raw_capture.capture(raw_capture, format='bgr', use_video_port=True)
 
-        # convert the frame to grayscale
-        gray = cv2.cvtColor(output.array, cv2.COLOR_BGR2GRAY)
+        # Convert the raw capture to a NumPy array
+        image = frame.array
 
-        # Detect faces in the frame
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=3, minSize=(30, 30))
-        # faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
-        is_srikar_present = False
+        # Use Face Recognition to detect faces and encode them
+        face_locations = fr.face_locations(image)
+        face_encodings = fr.face_encodings(image, face_locations)
 
-        for (x, y, w, h) in faces:
-            print("Found a face")
-            # Extract the face encoding from the current face
-            current_face_image = cv2.rectangle(output.array, (x,y), (x+w, y+h), (0, 255, 0), 2)
-            # current_face_image = output.array[y:y+h, x:x+w]
-            current_face_encoding = fr.face_encodings(current_face_image)
+        for face_encoding, face_location in zip(face_encodings, face_locations):
+            matches = fr.compare_faces(known_face_encodings, face_encoding)
+            if True in matches:
+                is_srikar_present = True
 
-            if len(current_face_encoding) > 0:
-                for known_face_encoding in known_face_encodings:
-                    if fr.compare_faces([known_face_encoding], current_face_encoding[0])[0]:
-                        # WE FOUND SRIKAR !!!
-                        is_srikar_present = True
-                        break    
+        # Show the frame
+        cv2.imshow("Frame", frame.array)
 
         return is_srikar_present
 

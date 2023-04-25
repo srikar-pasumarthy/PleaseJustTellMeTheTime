@@ -89,15 +89,13 @@ def update_time(time_since_srikar_detected):
     # schedule the update_time function to run again in 1 second
     window.after(1000, update_time(time_since_srikar_detected))
 
-    return time_since_srikar_detected
-
 # create a label to display the time
 time_label = tk.Label(window, font=("Arial", 30))
 time_label.pack(pady=50)
 
 # start the update_time loop
 time_since_srikar_detected = 6
-time_since_srikar_detected = update_time(time_since_srikar_detected)
+update_time(time_since_srikar_detected)
 
 # start the tkinter main loop
 window.mainloop()

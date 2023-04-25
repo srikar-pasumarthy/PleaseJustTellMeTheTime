@@ -27,7 +27,7 @@ camera.resolution = (640, 480)
 camera.framerate = 24
 
 # Create a stream object to hold the video data
-raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
+#raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
@@ -43,19 +43,22 @@ def detect_person():
     print("about to check encodings")
     # Perform face recognition on the captured frame
     face_locations = fr.face_locations(image)
-    face_encodings = fr.face_encodings(image, face_locations)
+    #face_encodings = fr.face_encodings(image, face_locations)
 
-    for face_encoding, face_location in zip(face_encodings, face_locations):
-        matches = fr.compare_faces(known_face_encodings, face_encoding)
+    if len(face_locations) > 0:
+        srikar_is_found = True
 
-        if True in matches:
-            print("Match found!")
-            # Draw a green rectangle around the recognized face
-            top, right, bottom, left = face_location
-            cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
-            srikar_is_found = True
-        else:
-            print("No match found!")
+    # for face_encoding, face_location in zip(face_encodings, face_locations):
+    #     matches = fr.compare_faces(known_face_encodings, face_encoding)
+
+    #     if True in matches:
+    #         print("Match found!")
+    #         # Draw a green rectangle around the recognized face
+    #         top, right, bottom, left = face_location
+    #         cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
+    #         srikar_is_found = True
+    #     else:
+    #         print("No match found!")
 
     # Show the frame
     cv2.imshow("Frame", image)

@@ -19,9 +19,6 @@ for i in range(1, 6):
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
-# Create a window to display the video
-cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
-
 # Set up the camera
 camera = picamera.PiCamera()
 camera.resolution = (640, 480)
@@ -36,7 +33,7 @@ def detect_person():
         # Create a stream object to hold the video data
         is_srikar_present = False
 
-        frame = raw_capture.capture(raw_capture, format='bgr', use_video_port=True)
+        frame = camera.capture(raw_capture, format='bgr', use_video_port=True)
 
         # Convert the raw capture to a NumPy array
         image = frame.array
@@ -49,9 +46,6 @@ def detect_person():
             matches = fr.compare_faces(known_face_encodings, face_encoding)
             if True in matches:
                 is_srikar_present = True
-
-        # Show the frame
-        cv2.imshow("Frame", frame.array)
 
         return is_srikar_present
 

@@ -2,7 +2,6 @@
 import tkinter as tk
 import time
 import main
-from opencv_version import *
 
 
 class DigitalClock(tk.Label):

@@ -28,17 +28,13 @@ raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
 print("Camera set up")
 
 def detect_person():
-    while True:
-        # read a frame from the camera
-        # Create a stream object to hold the video data
-        is_srikar_present = False
-
-        frame = camera.capture(raw_capture, format='bgr', use_video_port=True)
-
-        # Convert the raw capture to a NumPy array
+    is_srikar_present = False
+    
+    for frame in camera.capture_continuous(raw_capture, format='bgr', use_video_port=True):
+    # Convert the raw capture to a NumPy array
         image = frame.array
 
-        # Use Face Recognition to detect faces and encode them
+        # TODO: Use Face Recognition to detect faces and draw a green rectangle if the right person is found!
         face_locations = fr.face_locations(image)
         face_encodings = fr.face_encodings(image, face_locations)
 
@@ -47,7 +43,7 @@ def detect_person():
             if True in matches:
                 is_srikar_present = True
 
-        return is_srikar_present
+    return is_srikar_present
 
 # create a tkinter window
 window = tk.Tk()

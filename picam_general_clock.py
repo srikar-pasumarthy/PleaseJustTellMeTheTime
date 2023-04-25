@@ -30,14 +30,14 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_fronta
 
 
 #Hold time after recognizing srikar
-time_since_match = -1
+
 
 #Begin detecting faces
 def detect_person():
     # Capture a single frame
     raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
-    if time_since_match >= 5 or time_since_match == -1:
-        srikar_is_found = False
+    # if time_since_match >= 5 or time_since_match == -1:
+    #     srikar_is_found = False
     camera.capture(raw_capture, format='bgr')
     frame = raw_capture.array
 
@@ -64,7 +64,7 @@ def detect_person():
         if len(current_face_encoding) > 0:
             for known_face_encoding in known_face_encodings:
                 if fr.compare_faces([known_face_encoding], current_face_encoding[0], tolerance=0.6)[0]:
-                    time_since_match = 0
+                    # time_since_match = 0
                     is_srikar_present = True
                     break    
 

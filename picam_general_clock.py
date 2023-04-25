@@ -66,6 +66,7 @@ def detect_person():
 # create a tkinter window
 window = tk.Tk()
 window.geometry("300x200")
+time_since_srikar_detected = 0
 
 # create a label to display the time
 def update_time():
@@ -77,6 +78,10 @@ def update_time():
     print("here")
     if not is_srikar_present:
         time_to_display = now.strftime("%H:%M")
+        time_since_srikar_detected = 5
+    elif time_since_srikar_detected != 0:
+        # DO something
+        time_since_srikar_detected -= 1
     else:
         time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M")
     # update the label text with the current time

@@ -75,7 +75,7 @@ print("here")
 window = tk.Tk()
 window.attributes("-fullscreen", True)
 # window.geometry("300x200")
-window.configure(background='black', foreground='green')
+window.configure(background='black')
 
 # create a label to display the time
 def update_time():
@@ -95,7 +95,7 @@ def update_time():
     window.after(1000, update_time)
 
 # create a label to display the time
-time_label = tk.Label(window, font=("DS-Digital", 80))
+time_label = tk.Label(window, font=("DS-Digital", 80), fg="green")
 time_label.pack(pady=50)
 time_label.place(relx=0.5, rely=0.5, anchor="center")
 

@@ -31,7 +31,7 @@ class face_recognition:
 
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
-
+        print("Initializing buffer variable")
         #Hold time after recognizing srikar
         self.time_since_match = -1
 
@@ -67,6 +67,7 @@ class face_recognition:
         return self.time_since_match
     #Begin detecting faces
     def detect_person(self):
+        print(self.time_since_match)
         # Capture a single frame
         raw_capture = picamera.array.PiRGBArray(self.camera, size=self.camera.resolution)
         if self.getTimeSinceMatch() >= 5 or self.getTimeSinceMatch() == -1:

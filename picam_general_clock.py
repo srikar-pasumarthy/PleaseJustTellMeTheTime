@@ -71,7 +71,7 @@ class face_recognition:
             self.setTimeSinceMatch(-1)
             is_srikar_present = False
         else:
-            self.setTimeSinceMatch(0)
+            self.setTimeSinceMatch(self.getTimeSinceMatch() + 1)
 
 
         self.camera.capture(raw_capture, format='bgr')
@@ -100,7 +100,6 @@ class face_recognition:
             if len(current_face_encoding) > 0:
                 for known_face_encoding in self.known_face_encodings:
                     if fr.compare_faces([known_face_encoding], current_face_encoding[0], tolerance=0.6)[0]:
-                        
                         self.setTimeSinceMatch(0)
                         is_srikar_present = True
                         break    

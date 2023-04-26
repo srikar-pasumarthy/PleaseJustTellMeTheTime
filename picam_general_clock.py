@@ -35,6 +35,8 @@ class face_recognition:
         #Hold time after recognizing srikar
         self.time_since_match = -1
 
+        self.is_srikar_present = False
+
         # create a tkinter window
         print("here")
         self.window = tk.Tk()
@@ -69,7 +71,7 @@ class face_recognition:
         raw_capture = picamera.array.PiRGBArray(self.camera, size=self.camera.resolution)
         if self.getTimeSinceMatch() >= 5 or self.getTimeSinceMatch() == -1:
             self.setTimeSinceMatch(-1)
-            is_srikar_present = False
+            self.is_srikar_present = False
         else:
             self.setTimeSinceMatch(self.getTimeSinceMatch() + 1)
 
@@ -82,11 +84,11 @@ class face_recognition:
 
         # Detect faces in the frame
         faces = self.face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=3, minSize=(30, 30))
-        is_srikar_present = False
+        
 
         print(f"there are {len(faces)}")
         if len(faces) == 0:
-            return is_srikar_present
+            return self.is_srikar_present
 
         # Process each detected face
         for (x, y, w, h) in faces:
@@ -101,10 +103,10 @@ class face_recognition:
                 for known_face_encoding in self.known_face_encodings:
                     if fr.compare_faces([known_face_encoding], current_face_encoding[0], tolerance=0.6)[0]:
                         self.setTimeSinceMatch(0)
-                        is_srikar_present = True
+                        self.is_srikar_present = True
                         break    
 
-        return is_srikar_present
+        return self.is_srikar_present
 
    
 

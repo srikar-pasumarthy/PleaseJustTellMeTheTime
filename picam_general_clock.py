@@ -95,7 +95,7 @@ def update_time():
     window.after(1000, update_time)
 
 # create a label to display the time
-time_label = tk.Label(window, font=("DS-Digital", 80), fg="green", bg="black")
+time_label = tk.Label(window, font=("DS-Digital", 110), fg="green", bg="black")
 time_label.pack(pady=50)
 time_label.place(relx=0.5, rely=0.5, anchor="center")
 

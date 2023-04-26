@@ -133,4 +133,6 @@ class face_recognition:
     def exit_fullscreen(self, event):
         self.window.attributes("-fullscreen", False)
 
+face_recognition()
+
    

@@ -39,7 +39,8 @@ def getTimeSinceMatch():
         return -1
 
 def incrementTimeSinceMatch():
-    time_since_match += 1
+    t = getTimeSinceMatch() + 1
+    time_since_match = t
     return time_since_match
 #Begin detecting faces
 def detect_person():
@@ -47,7 +48,7 @@ def detect_person():
     raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
     if getTimeSinceMatch() >= 5 or getTimeSinceMatch() == -1:
         is_srikar_present = False
-        
+
     camera.capture(raw_capture, format='bgr')
     frame = raw_capture.array
 

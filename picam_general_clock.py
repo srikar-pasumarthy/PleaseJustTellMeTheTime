@@ -75,7 +75,7 @@ print("here")
 window = tk.Tk()
 window.attributes("-fullscreen", True)
 # window.geometry("300x200")
-# window.configure(font=('Courier', 40), background='black', foreground='green')
+window.configure(background='black', foreground='green')
 
 # create a label to display the time
 def update_time():

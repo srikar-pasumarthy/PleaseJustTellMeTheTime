@@ -56,11 +56,8 @@ class face_recognition:
         self.window.mainloop()
 
     def getTimeSinceMatch(self):
-        if self.time_since_match:
-            return self.time_since_match
-        else:
-            self.time_since_match = -1
-            return self.time_since_match
+        return self.time_since_match
+       
 
     def setTimeSinceMatch(self, i):
         self.time_since_match = i

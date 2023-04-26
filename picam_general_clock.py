@@ -36,18 +36,20 @@ def getTimeSinceMatch():
     if time_since_match:
         return time_since_match
     else:
-        return -1
+        time_since_match = -1
+        return time_since_match
 
-def incrementTimeSinceMatch():
-    t = getTimeSinceMatch() + 1
-    time_since_match = t
+def setTimeSinceMatch(i):
+    time_since_match = i
     return time_since_match
 #Begin detecting faces
 def detect_person():
     # Capture a single frame
     raw_capture = picamera.array.PiRGBArray(camera, size=camera.resolution)
     if getTimeSinceMatch() >= 5 or getTimeSinceMatch() == -1:
+        setTimeSinceMatch(-1)
         is_srikar_present = False
+
 
     camera.capture(raw_capture, format='bgr')
     frame = raw_capture.array
@@ -75,7 +77,8 @@ def detect_person():
         if len(current_face_encoding) > 0:
             for known_face_encoding in known_face_encodings:
                 if fr.compare_faces([known_face_encoding], current_face_encoding[0], tolerance=0.6)[0]:
-                    incrementTimeSinceMatch()
+                    
+                    setTimeSinceMatch(getTimeSinceMatch() + 1)
                     is_srikar_present = True
                     break    
 

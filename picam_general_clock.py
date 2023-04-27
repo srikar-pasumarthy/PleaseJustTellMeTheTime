@@ -69,7 +69,7 @@ class face_recognition:
         print(self.time_since_match)
         # Capture a single frame
         raw_capture = picamera.array.PiRGBArray(self.camera, size=self.camera.resolution)
-        if self.getTimeSinceMatch() >= 5 or self.getTimeSinceMatch() == -1:
+        if self.getTimeSinceMatch() >= 3 or self.getTimeSinceMatch() == -1:
             self.setTimeSinceMatch(-1)
             self.is_srikar_present = False
         else:
@@ -121,7 +121,7 @@ class face_recognition:
         if not is_srikar_present:
             time_to_display = now.strftime("%H:%M")
         else:
-            time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M")
+            time_to_display = (now + timedelta(minutes=15)).strftime("%H:%M")
         # update the label text with the current time
         self.time_label.config(text=time_to_display)
         # schedule the update_time function to run again in 1 second

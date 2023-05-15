@@ -55,17 +55,18 @@ window.geometry("300x200")
 
 # create a label to display the time
 def update_time():
-    # get the current time
     now = datetime.now()
-    # determine if a person is present
     is_srikar_present = detect_person()
+
     # set the time to display based on whether a person is present
     if is_srikar_present:
-        time_to_display = now.strftime("%H:%M:%S")
+        time_to_display = (now + timedelta(minutes=15)).strftime("%H:%M")
     else:
-        time_to_display = (now + timedelta(minutes=10)).strftime("%H:%M:%S")
+        time_to_display = now.strftime("%H:%M")
+    
     # update the label text with the current time
     time_label.config(text=time_to_display)
+
     # schedule the update_time function to run again in 1 second
     window.after(1000, update_time)
 
